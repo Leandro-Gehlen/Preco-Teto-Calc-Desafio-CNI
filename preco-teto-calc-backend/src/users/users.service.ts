@@ -5,6 +5,8 @@ import { DbService } from 'src/shared/db/db.service';
 
 import * as bcrypt from 'bcrypt';
 import { ICreateUserResponse } from './interfaces/create-user-response.interface';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { FindUserDto } from './dto/find-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -38,19 +40,57 @@ export class UsersService {
     };
   }
 
-  findAll() {
-    return `This action returns all users`;
+  async findOne(id: FindUserDto) {
+    const hasUser = await this.prisma.user.findFirst({
+      where: {
+        id: id.id,
+      },
+    });
+    if (hasUser) {
+      return {
+        statusCode: 200,
+        message: 'User was found on database.',
+        data: {
+          status: true,
+          user: hasUser,
+        },
+      };
+    }
+
+    throw new HttpException(
+      'User was not found on our database.',
+      HttpStatus.BAD_REQUEST,
+    );
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
-  }
+  async update(id: string, userData: UpdateUserDto) {
+    const hasUser = await this.prisma.user.findUnique({
+      where: {
+        id: id,
+      },
+    });
 
-  //update(id: number, updateUserDto: UpdateUserDto) {
-  //  return `This action updates a #${id} user`;
-  //}
+    if (!hasUser) {
+      throw new HttpException(
+        'User not found on our database.',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+    await this.prisma.user.update({
+      where: {
+        id: id,
+      },
+      data: {
+        first_name: userData.firstName?.toUpperCase(),
+        last_name: userData.lastName?.toUpperCase(),
+        email: userData.email?.toLocaleLowerCase(),
+        password: await bcrypt.hash(userData.password, 10),
+      },
+    });
+    return {
+      statusCode: 200,
+      message: 'User was updated on database.',
+    };
   }
 }

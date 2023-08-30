@@ -31,7 +31,7 @@ export class CreateUserDto {
   @IsDefined()
   @IsNotEmpty()
   @MinLength(6)
-  @MaxLength(8)
+  @MaxLength(20)
   @IsStrongPassword()
   password: string;
 }
