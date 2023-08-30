@@ -5,6 +5,9 @@ import { ICreateUserResponse } from './interfaces/create-user-response.interface
 import { IGetUserResponse } from './interfaces/find-user-response.interface';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { FindUserDto } from './dto/find-user.dto';
+import { IsPublic } from '../auth/decorators/is-public.decotator';
+import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
+import { User } from '@prisma/client';
 
 //import { UpdateUserDto } from './dto/update-user.dto';
 
@@ -12,6 +15,7 @@ import { FindUserDto } from './dto/find-user.dto';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+  @IsPublic()
   @Post('create')
   async create(
     @Body() createUserDto: CreateUserDto,
@@ -46,5 +50,10 @@ export class UsersController {
         statusCode: error.status,
       };
     }
+  }
+
+  @Get('me')
+  getMe(@CurrentUser() user: User) {
+    return user;
   }
 }
