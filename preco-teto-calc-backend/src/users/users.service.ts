@@ -6,10 +6,14 @@ import { DbService } from 'src/shared/db/db.service';
 import * as bcrypt from 'bcrypt';
 import { ICreateUserResponse } from './interfaces/create-user-response.interface';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { AuthService } from 'src/auth/auth.service';
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly prisma: DbService) {}
+  constructor(
+    private readonly prisma: DbService,
+    private readonly authService: AuthService,
+  ) {}
 
   async create(data: CreateUserDto): Promise<ICreateUserResponse> {
     const hasUser = await this.prisma.user.findUnique({
@@ -24,7 +28,7 @@ export class UsersService {
       );
     }
 
-    await this.prisma.user.create({
+    const createdUser = await this.prisma.user.create({
       data: {
         email: data.email.toLocaleLowerCase(),
         first_name: data.firstName.toLocaleUpperCase(),
@@ -36,6 +40,7 @@ export class UsersService {
     return {
       statusCode: HttpStatus.CREATED,
       message: 'A new user has been created',
+      data: this.authService.login(createdUser),
     };
   }
 

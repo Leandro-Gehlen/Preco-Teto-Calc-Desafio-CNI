@@ -9,8 +9,6 @@ import { IsPublic } from '../auth/decorators/is-public.decotator';
 import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
 import { User } from '@prisma/client';
 
-//import { UpdateUserDto } from './dto/update-user.dto';
-
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
