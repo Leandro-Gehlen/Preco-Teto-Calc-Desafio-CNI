@@ -6,7 +6,6 @@ import { DbService } from 'src/shared/db/db.service';
 import * as bcrypt from 'bcrypt';
 import { ICreateUserResponse } from './interfaces/create-user-response.interface';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { FindUserDto } from './dto/find-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -40,12 +39,13 @@ export class UsersService {
     };
   }
 
-  async findOne(id: FindUserDto) {
-    const hasUser = await this.prisma.user.findFirst({
+  async findOne(email: string) {
+    const hasUser = await this.prisma.user.findUnique({
       where: {
-        id: id.id,
+        email: email,
       },
     });
+
     if (hasUser) {
       return {
         statusCode: 200,

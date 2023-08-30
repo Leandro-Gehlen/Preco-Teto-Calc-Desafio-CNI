@@ -1,7 +1,8 @@
-import { IsString, IsDefined } from 'class-validator';
+import { IsString, IsDefined, IsEmail } from 'class-validator';
 
 export class FindUserDto {
   @IsString()
   @IsDefined()
-  id: string;
+  @IsEmail()
+  email: string;
 }
