@@ -82,9 +82,9 @@ export class UsersService {
         id: id,
       },
       data: {
-        first_name: userData.firstName?.toUpperCase(),
-        last_name: userData.lastName?.toUpperCase(),
-        email: userData.email?.toLocaleLowerCase(),
+        first_name: userData.firstName.toUpperCase(),
+        last_name: userData.lastName.toUpperCase(),
+        email: userData.email.toLocaleLowerCase(),
         password: await bcrypt.hash(userData.password, 10),
       },
     });
