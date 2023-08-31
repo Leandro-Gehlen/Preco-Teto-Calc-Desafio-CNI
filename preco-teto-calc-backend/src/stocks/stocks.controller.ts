@@ -3,7 +3,7 @@ import {
   Get,
   Post,
   Body,
-  // Patch,
+  Patch,
   Delete,
   Query,
 } from '@nestjs/common';
@@ -11,6 +11,7 @@ import { StocksService } from './stocks.service';
 import { CreateStockDto } from './dto/create-stock.dto';
 import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
 import { User } from '@prisma/client';
+import { UpdateStockDto } from './dto/update-stock.dto';
 
 @Controller('stocks')
 export class StocksController {
@@ -43,10 +44,17 @@ export class StocksController {
     }
   }
 
-  /*   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateStockDto: UpdateStockDto) {
-    return this.stocksService.update(+id, updateStockDto);
-  } */
+  @Patch('update')
+  update(@Query() id, @Body() data: UpdateStockDto) {
+    try {
+      return this.stocksService.update(id, data);
+    } catch (error) {
+      return {
+        message: error.message,
+        statusCode: error.status,
+      };
+    }
+  }
 
   @Delete('delete')
   remove(@Query() id) {

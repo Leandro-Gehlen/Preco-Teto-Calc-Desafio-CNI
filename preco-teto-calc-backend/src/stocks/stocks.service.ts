@@ -4,6 +4,7 @@ import { CreateStockDto } from './dto/create-stock.dto';
 import { DbService } from 'src/shared/db/db.service';
 import { TopPriceCalcService } from 'src/shared/helpers/top-price-calc/top-price-calc.service';
 import { User } from '@prisma/client';
+import { UpdateStockDto } from './dto/update-stock.dto';
 
 @Injectable()
 export class StocksService {
@@ -99,9 +100,50 @@ export class StocksService {
     }
   }
 
-  /*  update(id: number, updateStockDto: UpdateStockDto) {
-    return `This action updates a #${id} stock`;
-  } */
+  async update({ id }, data: UpdateStockDto) {
+    try {
+      const updatedStock = await this.dbService.stock.update({
+        where: {
+          stock_id: id,
+        },
+        data: {
+          asset_name: data.assetName,
+          asset_code: data.assetCode,
+          percentage: data.percentage,
+          year1: data.year1,
+          year2: data.year2,
+          year3: data.year3,
+          year4: data.year4,
+          year5: data.year5,
+          top_price: this.topPriceCalcService.calc(data),
+        },
+      });
+      console.log(updatedStock, id, data);
+      if (updatedStock) {
+        const stockList: any = await this.dbService.stock.findMany({
+          where: {
+            userId: updatedStock.userId,
+          },
+          orderBy: {
+            created_at: 'asc',
+          },
+        });
+        console.log(stockList);
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const newStockList = stockList.map(({ userId, ...item }) => item);
+        return newStockList;
+      }
+    } catch (error) {
+      throw new HttpException(
+        'Can´t update this register. Provide a valid id',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    throw new HttpException(
+      'Can´t update this register. Please, try again.',
+      HttpStatus.BAD_REQUEST,
+    );
+  }
 
   async remove({ id }) {
     try {

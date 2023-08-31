@@ -4,7 +4,6 @@ import { CreateStockDto } from 'src/stocks/dto/create-stock.dto';
 @Injectable()
 export class TopPriceCalcService {
   calc(data: CreateStockDto) {
-    console.log(data);
     let newData;
     if (data.percentage) {
       newData = {
