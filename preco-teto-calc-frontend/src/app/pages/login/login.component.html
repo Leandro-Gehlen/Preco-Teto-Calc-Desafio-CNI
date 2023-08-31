@@ -1,23 +1,23 @@
 <app-navbar></app-navbar>
 <main class="main">
-  <h1>Login</h1>
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="form">
-    <div class="field">
-      <label class="label">
-        Email
-        <input class="input" type="email" placeholder="exemplo@email.com" formControlName="email">
-      </label>
+  <div class="container">
+    <div class="title">
+      <h1>Login</h1>
     </div>
-    <div>
-      <label>
-        Senha
-        <input type="password" placeholder="Digite sua senha aqui" formControlName="password">
-      </label>
-    </div>
-    <div>
-      <button type="submit">Entrar</button>
-    </div>
-  </form>
-
+    <form class="form-container" [formGroup]="loginForm" (ngSubmit)="onSubmit()" >
+      <div class="input-container" >
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" placeholder="exemplo@email.com" formControlName="email">
+      </div>
+      <div class="input-container">
+        <label for="password">Senha</label> 
+        <input type="password" name="password" id="password" placeholder="Digite sua senha aqui" formControlName="password"> 
+      </div>
+      
+        <button type="submit">Entrar</button>
+      
+    
+    </form>
+  </div>
 </main>
 <app-footer></app-footer>

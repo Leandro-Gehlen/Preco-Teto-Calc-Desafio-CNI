@@ -7,17 +7,26 @@
   justify-content: center;
   align-items: center;
   background-color: #402039;
-  color:white;
 
-  a{
-    text-decoration:none;
-    color:white;
+  .container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-    &:hover{
-      color:yellow;
-      cursor: pointer;
-    }
-  }
+    span{
 
+      font-family: 'Roboto Mono', monospace;
+      color:white;
   
+      a{
+        text-decoration:none;
+        color:white;
+    
+        &:hover{
+          color:yellow;
+          cursor: pointer;
+        }
+      }
+    }  
+  }
 }

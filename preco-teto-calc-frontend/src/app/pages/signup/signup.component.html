@@ -1,8 +1,31 @@
 <app-navbar></app-navbar>
 <main class="main">
-  <button routerLink="/">Voltar para Home</button>
-  <button routerLink="/login">Cadastre-se</button>
-  
-  <h1>Cadastro</h1>
-  </main>
-  <app-footer></app-footer>
+  <div class="container">
+    <div class="title">
+      <h1>Cadastro</h1>
+    </div>
+    <form class="form-container" [formGroup]="signUpForm" (ngSubmit)="onSubmit()" >
+      <div class="input-container" >
+        <label for="name">Nome</label>
+        <input type="text" name="name" id="name" placeholder="Digite seu nome" formControlName="firstName">
+      </div>
+      <div class="input-container" >
+        <label for="surname">Sobrenome</label>
+        <input type="text" name="surname" id="surname" placeholder="Digite seu sobrenome" formControlName="lastName">
+      </div>
+      <div class="input-container" >
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" placeholder="exemplo@email.com" formControlName="email">
+      </div>
+      <div class="input-container">
+        <label for="password">Senha</label> 
+        <input type="password" name="password" id="password" placeholder="Digite sua senha aqui" formControlName="password"> 
+      </div>
+      
+        <button type="submit">Entrar</button>
+      
+    
+    </form>
+  </div>
+</main>
+<app-footer></app-footer>
