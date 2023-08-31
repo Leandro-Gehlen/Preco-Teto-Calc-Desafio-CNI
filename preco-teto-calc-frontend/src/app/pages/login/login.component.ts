@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms'
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/shared/auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -12,10 +14,19 @@ export class LoginComponent {
     email:['', [Validators.required, Validators.email]],
     password:['', Validators.required],
   })
-  constructor(private fb: FormBuilder){}
+  constructor(private fb: FormBuilder, private auth:AuthService, private router: Router){}
 
   onSubmit():void{
-    console.log("Recebendo os dados do formulário", this.loginForm.value, this.loginForm.invalid)
+    this.auth.login(this.loginForm.value).subscribe({
+      next: (res:any)=>{
+        console.log(res)
+        localStorage.setItem('token', res.access_token)
+        this.router.navigate(['/dashboard'])
+      },
+      error: err => console.log(err),
+    })
+    this.loginForm.reset()
+    
   }
 
 }
