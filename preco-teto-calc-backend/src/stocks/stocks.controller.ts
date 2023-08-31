@@ -1,34 +1,59 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  // Patch,
+  Delete,
+  Query,
+} from '@nestjs/common';
 import { StocksService } from './stocks.service';
 import { CreateStockDto } from './dto/create-stock.dto';
-import { UpdateStockDto } from './dto/update-stock.dto';
+import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
+import { User } from '@prisma/client';
 
 @Controller('stocks')
 export class StocksController {
   constructor(private readonly stocksService: StocksService) {}
 
-  @Post()
-  create(@Body() createStockDto: CreateStockDto) {
-    return this.stocksService.create(createStockDto);
+  @Post('create')
+  create(@Body() data: CreateStockDto, @CurrentUser() user: User) {
+    try {
+      return this.stocksService.create(data, user);
+    } catch (error) {
+      return { message: error.message, statusCode: error.status };
+    }
   }
 
-  @Get()
-  findAll() {
-    return this.stocksService.findAll();
+  @Get('all')
+  findAll(@CurrentUser() user: User) {
+    try {
+      return this.stocksService.findAll(user);
+    } catch (error) {
+      return { message: error.message, statusCode: error.status };
+    }
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.stocksService.findOne(+id);
+  @Get('find')
+  findOne(@Query() id) {
+    try {
+      return this.stocksService.findOne(id);
+    } catch (error) {
+      return { message: error.message, statusCode: error.status };
+    }
   }
 
-  @Patch(':id')
+  /*   @Patch(':id')
   update(@Param('id') id: string, @Body() updateStockDto: UpdateStockDto) {
     return this.stocksService.update(+id, updateStockDto);
-  }
+  } */
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.stocksService.remove(+id);
+  @Delete('delete')
+  remove(@Query() id) {
+    try {
+      return this.stocksService.remove(id);
+    } catch (error) {
+      return { message: error.message, statusCode: error.status };
+    }
   }
 }

@@ -27,6 +27,7 @@ export class UsersController {
 
   @Get('find')
   async findOne(@Query() data: FindUserDto): Promise<IGetUserResponse> {
+    console.log(data);
     try {
       return await this.usersService.findOne(data.email);
     } catch (error) {

@@ -18,6 +18,26 @@ model User {
   password   String
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+  stocks     Stock[]
 
   @@map("users")
+}
+
+model Stock {
+  stock_id   String   @id @default(uuid())
+  asset_name String?
+  asset_code String
+  year1      String   @default("0")
+  year2      String   @default("0")
+  year3      String   @default("0")
+  year4      String   @default("0")
+  year5      String   @default("0")
+  percentage String   @default("0.06")
+  top_price  String   @default("0")
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  User       User?    @relation(fields: [userId], references: [id])
+  userId     String?
+
+  @@map("stocks")
 }

@@ -45,6 +45,7 @@ export class UsersService {
   }
 
   async findOne(email: string) {
+    console.log(email);
     const hasUser = await this.prisma.user.findUnique({
       where: {
         email: email,
@@ -52,12 +53,16 @@ export class UsersService {
     });
 
     if (hasUser) {
+      const newHasUser = {
+        ...hasUser,
+        password: undefined,
+      };
       return {
         statusCode: 200,
         message: 'User was found on database.',
         data: {
           status: true,
-          user: hasUser,
+          user: newHasUser,
         },
       };
     }
