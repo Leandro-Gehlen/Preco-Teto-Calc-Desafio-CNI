@@ -1,11 +1,11 @@
 <app-navbar></app-navbar>
 <main class="main">
   <h1>Login</h1>
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <div>
-      <label>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="form">
+    <div class="field">
+      <label class="label">
         Email
-        <input type="email" placeholder="exemplo@email.com" formControlName="email">
+        <input class="input" type="email" placeholder="exemplo@email.com" formControlName="email">
       </label>
     </div>
     <div>
