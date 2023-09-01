@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http'
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http'
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -16,6 +16,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SharedModule } from './shared/shared.module';
+import { DashboardService } from './services/dashboard.service';
+import { TokenInterceptorService } from './shared/auth/token-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,11 @@ import { SharedModule } from './shared/shared.module';
     SharedModule,
     HttpClientModule,
   ],
-  providers: [],
+  providers: [DashboardService,{
+    provide: HTTP_INTERCEPTORS,
+    useClass: TokenInterceptorService,
+    multi:true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

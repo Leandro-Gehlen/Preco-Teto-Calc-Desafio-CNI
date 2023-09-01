@@ -105,7 +105,6 @@ export class UsersService {
   }
 
   getData(user) {
-    console.log(user);
     if (Object(user).length != 0) {
       return {
         statusCode: 200,
