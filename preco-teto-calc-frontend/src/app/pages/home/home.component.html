@@ -21,8 +21,9 @@
 <div class="bottom-container">
   <h3>O que esta esperando para calcular o preço teto de algumas ações?</h3>
   <div class="btn-container">
-    <button class="btn" routerLink="/signup"><span>Não é Cadastrado? Cadastre-se agora.</span></button>
-    <button class="btn" routerLink="/login"><span>Ja é Cadastrado? Faça login agora.</span></button>
+    <button class="btn" *ngIf="!logged" routerLink="/signup"><span>Não é Cadastrado? Cadastre-se agora.</span></button>
+    <button class="btn" *ngIf="!logged" routerLink="/login"><span>Ja é Cadastrado? Faça login agora.</span></button>
+    <button class="btn-loggedIn" *ngIf="logged" routerLink="/dashboard"><span>Quero calcular o preço teto de ações agora.</span></button>
   </div>
 </div>
 </main>

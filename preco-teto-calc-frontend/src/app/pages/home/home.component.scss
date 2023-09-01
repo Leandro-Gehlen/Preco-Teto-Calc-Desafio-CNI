@@ -94,6 +94,22 @@
           font-weight: 400;
         }
       }
+      .btn-loggedIn{
+        width: 400px;
+        height: 60px;
+        padding: 0 30px;
+        margin: 30px;
+        border: 3px solid black;
+        background-color: white;
+
+        &:hover{
+          background-color: #884479;
+          border: 3px solid #402039;
+          color:white;
+          cursor: pointer;
+      }
     }
+    
   }
+}
 }
