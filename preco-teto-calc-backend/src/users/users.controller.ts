@@ -53,6 +53,13 @@ export class UsersController {
 
   @Get('me')
   getMe(@CurrentUser() user: User) {
-    return user;
+    try {
+      return this.usersService.getData(user);
+    } catch (error) {
+      return {
+        message: error.message,
+        statusCode: error.status,
+      };
+    }
   }
 }

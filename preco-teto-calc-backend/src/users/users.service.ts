@@ -103,4 +103,18 @@ export class UsersService {
       message: 'User was updated on database.',
     };
   }
+
+  getData(user) {
+    console.log(user);
+    if (Object(user).length != 0) {
+      return {
+        statusCode: 200,
+        data: {
+          firsName: user.firstName,
+          lastName: user.lastName,
+        },
+      };
+    }
+    throw new HttpException('Provide a valid token.', HttpStatus.BAD_REQUEST);
+  }
 }
