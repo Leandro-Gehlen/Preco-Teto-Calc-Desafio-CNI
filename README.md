@@ -68,8 +68,35 @@ Exemplo:
 
 A rota deste endpoint será http://localhost:3000/users/create
 
-![Rotas]() 
 
 Basta agora cadastrar , atualizar, ler e excluir os usuários quantas vezes quiser.
+Assim como, uma vez autenticado o token tem validade de 30 dias e poderá cadastrar , atualizar, ler e excluir quantas ações quiser.
+
+
+
+## Frontend
+
+Lembre-se de estar com o servidor do backend rodando.
+Clone o projeto e no diretório do frontend crie a pasta node_modules com o comando abaixo.
+
+```
+>
+> npm install 
+>
+```
+
+Inialize o servigor do Angular e acesse http://localhost:4200 
+
+```
+>
+> ng serve
+>
+```
+
+Basta se cadastrar , fazer logout e depois se logar novamente.
+Infelizmente o tempo é sempre curto e eu não consegui entregar a parte da aplicação que faz os cálculos dos preços teto das ações. </br> 
+Apenas pelo backend e para usuários autenticados é possível receber a lista das ações com o cálculo por enquanto.
+Minha ideia inicial era fazer dois cruds e viabilizar uma lista privada de cálculos de preços tetos de ações para cada usuário.
+Espero que seja o suficiente apenas a parte de autenticação.
 
 
